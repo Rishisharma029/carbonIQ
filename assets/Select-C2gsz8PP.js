@@ -1,0 +1,6 @@
+import{a as e,n as t}from"./createLucideIcon-CfmcanSD.js";import{m as n}from"./index-GbW7uUGR.js";var r=e(t(),1),i=n(),a=(0,r.forwardRef)(({className:e=``,label:t,error:n,description:r,options:a=[],id:o,children:s,...c},l)=>{let u=n?`${o}-error`:void 0,d=r?`${o}-desc`:void 0;return(0,i.jsxs)(`div`,{className:`flex flex-col gap-1.5 w-full`,children:[t&&(0,i.jsx)(`label`,{htmlFor:o,className:`text-sm font-semibold text-foreground select-none`,children:t}),(0,i.jsx)(`div`,{className:`relative flex items-center w-full`,children:(0,i.jsx)(`select`,{id:o,ref:l,"aria-invalid":!!n,"aria-describedby":n?u:d,className:`
+              flex h-10 w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground transition-all duration-150 cursor-pointer
+              focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary disabled:opacity-50 disabled:bg-muted/30
+              ${n?`border-red-500 focus-visible:ring-red-500 focus-visible:border-red-500`:``}
+              ${e}
+            `,...c,children:s||a.map(e=>(0,i.jsx)(`option`,{value:e.value,children:e.label},e.value))})}),r&&!n&&(0,i.jsx)(`p`,{id:d,className:`text-xs text-muted-foreground/80`,children:r}),n&&(0,i.jsx)(`p`,{id:u,className:`text-xs font-medium text-red-500`,children:n})]})});a.displayName=`Select`;export{a as t};
