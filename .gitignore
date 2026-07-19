@@ -1,0 +1,52 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+lib-cov/
+coverage/
+.nyc_output/
+
+# OS/System files
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+out/
+.docusaurus/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE/Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing
+.vitest/
+coverage-frontend/
+coverage-backend/
+
+# Temporary files
+cookies.txt
+.claude/
+
