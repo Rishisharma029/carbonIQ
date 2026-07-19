@@ -142,9 +142,9 @@ export default function EmissionFactorsPage() {
     } catch (err) {
       console.error('Failed to fetch factors:', err)
       // Mock factors fallback
-      setFactors([
+      let fallback = [
         {
-          _id: '1',
+          _id: 'mock_factor_elec_1',
           category: 'electricity',
           subCategory: 'national_grid',
           activity: 'grid_consumption',
@@ -159,7 +159,7 @@ export default function EmissionFactorsPage() {
           methodology: 'Weighted average baseline mix',
         },
         {
-          _id: '2',
+          _id: 'mock_factor_elec_2',
           category: 'electricity',
           subCategory: 'state_grid',
           activity: 'grid_consumption',
@@ -173,7 +173,94 @@ export default function EmissionFactorsPage() {
           confidence: 'High',
           methodology: 'Coal-mix baseline parameters',
         },
-      ])
+        {
+          _id: 'mock_factor_trans_1',
+          category: 'transport',
+          subCategory: 'road',
+          activity: 'passenger_car',
+          key: 'petrol_car',
+          state: null,
+          factor: 0.000143,
+          unit: 'tons/km',
+          source: 'ARAI v12',
+          publicationYear: 2023,
+          version: 'IN-2023-V1.0',
+          confidence: 'Medium',
+          methodology: 'ARAI vehicle emissions baseline',
+        },
+        {
+          _id: 'mock_factor_trans_2',
+          category: 'transport',
+          subCategory: 'road',
+          activity: 'electric_vehicle',
+          key: 'electric_scooter',
+          state: null,
+          factor: 0.000035,
+          unit: 'tons/km',
+          source: 'ARAI v12',
+          publicationYear: 2023,
+          version: 'IN-2023-V1.0',
+          confidence: 'High',
+          methodology: 'Charging efficiency and grid power factor derivation',
+        },
+        {
+          _id: 'mock_factor_food_1',
+          category: 'food',
+          subCategory: 'meals',
+          activity: 'diet_choice',
+          key: 'vegetarian',
+          state: null,
+          factor: 0.0012,
+          unit: 'tons/meal',
+          source: 'IPCC v15',
+          publicationYear: 2023,
+          version: 'IN-2023-V1.0',
+          confidence: 'Medium',
+          methodology: 'Average grain, pulse and dairy logistics emissions',
+        },
+        {
+          _id: 'mock_factor_food_2',
+          category: 'food',
+          subCategory: 'meals',
+          activity: 'diet_choice',
+          key: 'non_vegetarian',
+          state: null,
+          factor: 0.0031,
+          unit: 'tons/meal',
+          source: 'IPCC v15',
+          publicationYear: 2023,
+          version: 'IN-2023-V1.0',
+          confidence: 'High',
+          methodology: 'High-intensity livestock farming feed-to-meat analysis',
+        },
+        {
+          _id: 'mock_factor_waste_1',
+          category: 'waste',
+          subCategory: 'municipal',
+          activity: 'landfill',
+          key: 'solid_waste',
+          state: null,
+          factor: 0.45,
+          unit: 'tons/ton',
+          source: 'CPCB Guidelines',
+          publicationYear: 2023,
+          version: 'IN-2023-V1.0',
+          confidence: 'Medium',
+          methodology: 'Standard anaerobic decay model for mixed solid waste',
+        },
+      ]
+
+      // Filter locally based on interactive selection parameters
+      if (filterCategory) {
+        fallback = fallback.filter((f) => f.category === filterCategory)
+      }
+      if (filterState) {
+        fallback = fallback.filter((f) => f.state === filterState)
+      }
+      if (filterVersion) {
+        fallback = fallback.filter((f) => f.version === filterVersion)
+      }
+      setFactors(fallback as any)
     } finally {
       setLoadingExplorer(false)
     }
@@ -194,7 +281,28 @@ export default function EmissionFactorsPage() {
           source: 'Central Electricity Authority (CEA)',
           sponsoringAgency: 'Ministry of Power, GoI',
           category: 'Grid Electricity (National/Regional)',
-          description: 'CEA CO2 Database v19: CO2 baseline factor of 0.71 kg CO2/kWh.',
+          description: 'CEA CO2 Database v19: CO2 baseline factor of 0.71 kg CO2/kWh (weighted average including renewables).',
+        },
+        {
+          rank: 2,
+          source: 'Bureau of Energy Efficiency (BEE)',
+          sponsoringAgency: 'Ministry of Power, GoI',
+          category: 'Appliance Energy Efficiency, Clean Power',
+          description: 'Fuel efficiency standards, industrial perform-achieve-trade (PAT) baselines.',
+        },
+        {
+          rank: 3,
+          source: 'Ministry of Road Transport & Highways (MoRTH) / ARAI',
+          sponsoringAgency: 'Ministry of Road Transport, GoI',
+          category: 'Vehicle Emissions, Fuel Economy',
+          description: 'ARAI mileage benchmarks; standard gasoline car emission factor: 0.12 - 0.16 kg CO2e/km (class dependent).',
+        },
+        {
+          rank: 4,
+          source: 'Ministry of Petroleum & Natural Gas (PPAC)',
+          sponsoringAgency: 'Ministry of Petroleum, GoI',
+          category: 'Fuel Densities, Calorific Values',
+          description: 'Liquid/gaseous fuels (LPG, PNG, Kerosene, Petrol, Diesel) net calorific values and density standards.',
         },
       ])
     } finally {
