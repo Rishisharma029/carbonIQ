@@ -4,6 +4,19 @@ CarbonIQ is a production-grade, full-stack carbon accounting and analytics platf
 
 ---
 
+## ⚡ Live Demo
+
+You can access the live frontend deployment here:
+- **Application URL**: [https://rishisharma029.github.io/carbonIQ/](https://rishisharma029.github.io/carbonIQ/)
+- **Login Page**: [https://rishisharma029.github.io/carbonIQ/login](https://rishisharma029.github.io/carbonIQ/login) (or [https://rishisharma029.github.io/login](https://rishisharma029.github.io/login) if configured with a custom domain redirect)
+
+### 🔑 Demo Credentials
+Use the following credentials to sign in and explore the pre-seeded historical calculation data, goals progress, and carbon analytics:
+- **Email Address**: `testdash@carboniq.com`
+- **Password**: `Password123!`
+
+---
+
 ## 🏗️ System Architecture & Logical Layers
 
 ```mermaid
