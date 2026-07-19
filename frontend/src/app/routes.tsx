@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { createBrowserRouter } from 'react-router'
+import { createHashRouter } from 'react-router'
 import PublicLayout from '@/shared/ui/PublicLayout'
 import AppLayout from '@/shared/ui/AppLayout'
 import AuthGuard from '@/shared/ui/AuthGuard'
@@ -26,7 +26,7 @@ const PageLoader = () => (
   </div>
 )
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   // Public marketing & auth routes
   {
     path: '/',
