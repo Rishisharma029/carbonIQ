@@ -82,7 +82,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         // Queue subsequent 401s until the refresh completes
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           refreshQueue.push(() => {
             resolve(api(originalRequest))
           })
