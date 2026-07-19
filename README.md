@@ -59,20 +59,20 @@ sequenceDiagram
     participant Controller as Express Router
     participant ClientCookie as Client Browser Cookie Jar
 
-    Client->>CSRF: GET /api/v1/auth/csrf-token
-    Note over CSRF: Generate secure random 32-byte token
-    CSRF-->>ClientCookie: Set-Cookie: csrf_token=<token>; SameSite=Strict
-    CSRF-->>Client: Response Body: { csrfToken: <token> }
+    Client->>CSRF: "GET /api/v1/auth/csrf-token"
+    Note over CSRF: "Generate secure random 32-byte token"
+    CSRF-->>ClientCookie: "Set-Cookie: csrf_token=<token>; SameSite=Strict"
+    CSRF-->>Client: "Response Body: { csrfToken: <token> }"
     
-    Note over Client: Axios caches token and automatically<br/>attaches it to "x-csrf-token" headers
+    Note over Client: "Axios caches token and automatically attaches it to x-csrf-token headers"
     
-    Client->>CSRF: POST /api/v1/calculator { payload }<br/>Header: x-csrf-token = <token>
-    Note over CSRF: Compare request header x-csrf-token<br/>with csrf_token cookie via constant-time timingSafeEqual
+    Client->>CSRF: "POST /api/v1/calculator { payload } (Header: x-csrf-token = <token>)"
+    Note over CSRF: "Compare request header x-csrf-token with csrf_token cookie via constant-time timingSafeEqual"
     alt CSRF Match Successful
         CSRF->>Controller: Forward request to route handler
-        Controller-->>Client: 201 Created (Calculation Logged)
+        Controller-->>Client: "201 Created (Calculation Logged)"
     else Tokens Mismatch or Missing
-        CSRF-->>Client: 403 Forbidden (Invalid CSRF Token)
+        CSRF-->>Client: "403 Forbidden (Invalid CSRF Token)"
     end
 ```
 
@@ -90,25 +90,25 @@ sequenceDiagram
     participant Route as Protected Controller
     participant Session as Session & Refresh Service
 
-    Client->>Auth: GET /api/v1/dashboard (access_token cookie)
-    Note over Auth: Verify JWT signature and token version
+    Client->>Auth: "GET /api/v1/dashboard (access_token cookie)"
+    Note over Auth: "Verify JWT signature and token version"
     alt Access Token Valid
         Auth->>Route: Forward Request
-        Route-->>Client: 200 OK (Dashboard Data)
+        Route-->>Client: "200 OK (Dashboard Data)"
     else Access Token Expired (401)
-        Auth-->>Client: 401 Unauthorized
-        Note over Client: Interceptor intercepts 401, pauses queue,<br/>and triggers silent refresh
-        Client->>Session: POST /api/v1/auth/refresh (refresh_token cookie)
-        Note over Session: Validate active session and rotate refresh token
+        Auth-->>Client: "401 Unauthorized"
+        Note over Client: "Interceptor intercepts 401, pauses queue, and triggers silent refresh"
+        Client->>Session: "POST /api/v1/auth/refresh (refresh_token cookie)"
+        Note over Session: "Validate active session and rotate refresh token"
         alt Refresh Successful
-            Session-->>Client: Set-Cookie: access_token, refresh_token
-            Note over Client: Flush queued requests using new session cookies
-            Client->>Auth: Retry original request GET /api/v1/dashboard
+            Session-->>Client: "Set-Cookie: access_token, refresh_token"
+            Note over Client: "Flush queued requests using new session cookies"
+            Client->>Auth: "Retry original request GET /api/v1/dashboard"
             Auth->>Route: Forward Request
-            Route-->>Client: 200 OK (Dashboard Data)
+            Route-->>Client: "200 OK (Dashboard Data)"
         else Refresh Token Expired or Revoked
-            Session-->>Client: 401 Session Dead
-            Note over Client: Clear store state & Redirect to /login
+            Session-->>Client: "401 Session Dead"
+            Note over Client: "Clear store state & Redirect to /login"
         end
     end
 ```
