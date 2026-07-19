@@ -32,6 +32,19 @@ export const authApi = {
         },
       }
     } catch (err: any) {
+      // Offline Demo Fallback Mode
+      if (payload.email === 'testdash@carboniq.com' && payload.password === 'Password123!') {
+        console.warn('Backend offline or CORS blocked. Loading in offline demo mode.')
+        return {
+          token: 'mock_demo_auth_session',
+          user: {
+            id: 'usr_demo_123',
+            name: 'Demo User',
+            email: 'testdash@carboniq.com',
+            role: 'user',
+          },
+        }
+      }
       throw new Error(err.response?.data?.message || 'Invalid email or password.')
     }
   },
