@@ -25,7 +25,7 @@ const envSchema = z.object({
   JWT_AUDIENCE: z.string().default('carboniq-app'),
   ALLOWED_ORIGINS: z
     .string()
-    .default('http://localhost:5173,http://127.0.0.1:5173')
+    .default('http://localhost:5173,http://127.0.0.1:5173,https://rishisharma029.github.io')
     .transform((value) => splitCsv(value))
     .refine((origins) => !origins.includes('*'), 'ALLOWED_ORIGINS cannot contain *'),
   TRUST_PROXY: z
